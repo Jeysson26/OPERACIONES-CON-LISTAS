@@ -1,0 +1,29 @@
+# OPERACIONES-CON-LISTAS
+
+package com.udem.clases;
+
+public class MiNodo {
+
+    private Integer dato;
+    
+    private MiNodo siguiente;
+
+    public MiNodo() {
+    }
+
+    public Integer getDato() {
+        return dato;
+    }
+
+    public void setDato(Integer dato) {
+        this.dato = dato;
+    }
+
+    public MiNodo getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(MiNodo siguiente) {
+        this.siguiente = siguiente;
+    }
+}
