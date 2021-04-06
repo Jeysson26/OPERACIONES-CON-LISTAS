@@ -1,0 +1,201 @@
+package com.udem.clases;
+
+public class ListaSimplementeEnlazada {
+
+    private MiNodo cabeza;
+    private int tamanno;
+
+    public ListaSimplementeEnlazada() {
+        inicializar();
+    }
+
+    private void inicializar() {
+        cabeza = null;
+        tamanno = 0;
+    }
+
+    public int getTamanno() {
+        return tamanno;
+    }
+
+    public void vaciar() {
+        inicializar();
+    }
+
+    public void eliminar(int indice) {
+        if (indice >= 0 && indice < tamanno) {
+            if (indice == 0) {
+                cabeza = cabeza.getSiguiente();
+
+            } else {
+                int i;
+                MiNodo temporal = cabeza;
+
+                for (i = 0; i < indice - 1; i++) {
+                    temporal = temporal.getSiguiente();
+                }
+                MiNodo siguiente = temporal.getSiguiente();
+                System.out.println("-----------------------------------------");
+                System.out.println("Eliminando " + indice + " con id " + siguiente);
+
+                temporal.setSiguiente(siguiente.getSiguiente());
+            }
+
+            tamanno--;
+
+        } else {
+            System.out.println("-----------------------------------------");
+            System.out.println("Indice fuera de rango " + indice);
+        }
+    }
+
+    public void agregar(Integer datoAgregar) {
+        MiNodo nuevoNodo = new MiNodo();
+        nuevoNodo.setDato(datoAgregar);
+
+        if (cabeza == null) {
+            cabeza = nuevoNodo;
+
+        } else {
+            MiNodo temporal = cabeza;
+
+            while (temporal.getSiguiente() != null) {
+                temporal = temporal.getSiguiente();
+            }
+            temporal.setSiguiente(nuevoNodo);
+        }
+        tamanno++;
+    }
+
+    public void agregar(int indice, Integer datoAgregar) {
+        if (indice >= 0 && indice < tamanno) {
+            MiNodo nuevoNodo = new MiNodo();
+            nuevoNodo.setDato(datoAgregar);
+
+            if (indice == 0) {
+                nuevoNodo.setSiguiente(cabeza);
+                cabeza = nuevoNodo;
+
+            } else {
+                int i;
+                MiNodo temporal = cabeza;
+
+                for (i = 0; i < indice - 1; i++) {
+                    temporal = temporal.getSiguiente();
+                }
+                MiNodo siguiente = temporal.getSiguiente();
+                System.out.println("-----------------------------------------");
+                System.out.println("Agregando " + datoAgregar.toString() + " el la pocision " + indice + " apuntando a " + siguiente);
+
+                temporal.setSiguiente(nuevoNodo);
+                nuevoNodo.setSiguiente(siguiente);
+            }
+
+            tamanno++;
+        } else {
+            System.out.println("-----------------------------------------");
+            System.out.println("Fuera derango para agregar la pocision " + indice);
+        }
+    }
+
+    public void imprimir() {
+        int indice = 0;
+        MiNodo temporal = cabeza;
+
+        System.out.println("-----------------------------------------");
+
+        while (temporal != null) {
+            System.out.println("Lista simple en [" + indice + "] = " + temporal.getDato() + " -> apunta a " + temporal.getSiguiente());
+            temporal = temporal.getSiguiente();
+            indice++;
+        }
+
+        System.out.println("-----------------------------------------");
+    }
+
+    public Object obtenerDato(int indice) {
+        if (indice >= 0 && indice < tamanno) {
+            if (indice == 0) {
+                MiNodo temporal = cabeza;
+                System.out.println("Id del nodo " + indice + " es " + temporal);
+
+                return temporal.getDato();
+
+            } else {
+                int i = 0;
+                MiNodo temporal = cabeza;
+                
+                for (i = 0; i < indice - 1; i++) {
+                    temporal = temporal.getSiguiente();
+                }
+                System.out.println("Id del nodo " + indice + " es " + temporal.getSiguiente());
+                return temporal.getSiguiente().getDato();
+            }
+        } else {
+            System.out.println("Buscar por indice " + indice + " incorrecto");
+            return null;
+        }
+    }
+    
+    public Integer obtenerPosicion(Object dato){
+        int indice = 0;
+        boolean encontrado = false;
+        
+        MiNodo temporal = cabeza;
+        
+        while (temporal != null) {
+            if (dato.equals(temporal.getDato())) {
+                System.out.println("El id es " + temporal);
+                return indice;
+            }
+            indice++;
+            temporal = temporal.getSiguiente();
+        }
+        if (!encontrado) {
+            System.out.println("Dato no encontrado: " + dato.toString());
+            return null;
+        }
+        else{
+            return indice;
+        }
+    }
+    
+    public Double promedio(){
+        int indice = 0;
+        double prom = 0; 
+        MiNodo temporal = cabeza;
+
+        while (temporal != null) {
+            prom += temporal.getDato();
+            temporal = temporal.getSiguiente();
+            indice++;
+        }
+        return prom/indice;
+    }
+    
+    public Integer mayor(){        
+        MiNodo temporal = cabeza;
+        int numMayor = 0; 
+        
+        while (temporal != null) {
+            if (temporal.getDato() > numMayor) {
+                numMayor = temporal.getDato();
+            }
+            temporal = temporal.getSiguiente();          
+        }
+        return numMayor;
+    }
+    
+    public Integer menor(){
+        MiNodo temporal = cabeza;
+        int numMenor = temporal.getDato(); 
+        
+        while (temporal != null) {
+            if (temporal.getDato() < numMenor) {
+                numMenor = temporal.getDato();
+            }
+            temporal = temporal.getSiguiente();          
+        }
+        return numMenor;
+    }
+}
